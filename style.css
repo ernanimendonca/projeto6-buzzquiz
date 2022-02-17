@@ -298,3 +298,90 @@ figcaption{
 .options .whiten {
     opacity: 0.3;
 }
+.subtitle-questions{
+    width: 99px;
+    height: 23px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+    }
+
+    .creatingQuizz{
+    width: 600px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    }
+    .creatingQuizz{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+    .newQuestion{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .newQuestion p{
+        margin: 27px 0 12px 17px;
+    }
+    .newQuestion h2{
+        margin-top: 14px;
+    }
+    .newQuestion input{
+        width: 564px;
+        height: 46px;
+        background: #FFFFFF;
+        border: 1px solid #D1D1D1;
+        box-sizing: border-box;
+        border-radius: 5px;
+        margin-bottom: 14px;
+        color: #BABABA;
+    }
+    .newQuestion input::placeholder{
+        font-family: Roboto;
+        font-style: italic;
+        font-weight: normal;
+        font-size: 19px;
+        line-height: 22px;
+        padding: 13px 0 11px 23.16px;
+
+
+    }
+    .basic-info h2{
+        margin-bottom: 36px;
+    }
+    .incorrectAnswer{
+        margin-bottom: 18px;
+    }
+    .AswerList{
+        display: flex;
+        flex-direction: row;
+        height: 74px;
+        align-items: center;
+        justify-content:space-between;
+        padding: 0 20px 0 17px;
+        background: #FFFFFF;
+        margin-bottom: 22px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    }
+    .AswerList h3,ion-icon{
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 23px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 22px;
+
+        color: #000000;
+    }
