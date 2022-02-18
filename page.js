@@ -42,53 +42,34 @@ function renderInfosIdQuizz(item) {
         </div>
     `
     for (let index = 0; index < item.data.questions.length; index++) {
-        for (let j = 0; j < item.data.questions[index].answers.length; j++) {
-            //    let options = document.querySelector('.options')
-                `
-                <figure class="image-op" onclick="selecionarResposta(this)">
-                <img src="${item.data.questions[index].answers[j].image}" alt=""/>
-                    <figcaption>${item.data.questions[index].answers[j].text}</figcaption>
-                </figure>
-           `
-           options.push(teste)
-            console.log(options);
-        }
+        // for (let j = 0; j < item.data.questions[index].answers.length; j++) {
+        //     //    let options = document.querySelector('.options')
+        //         `
+        //         <figure class="image-op" onclick="selecionarResposta(this)">
+        //         <img src="${item.data.questions[index].answers[j].image}" alt=""/>
+        //             <figcaption>${item.data.questions[index].answers[j].text}</figcaption>
+        //         </figure>
+        //    `
+        //    options.push(teste)
+        //     console.log(options);
+        // }
         container.innerHTML +=
             `
         <div class="container-question">
             <div class="header-question">
                 <p>${item.data.questions[index].title}</p>
             </div>
-            <div class="options">
-              
+            <div class="options ${index}">
             </div>
-            
-        </div>
+        </div>-
         `
-     
     }
+    renderOptionsQuizz(item,index)
+    console.log(item);
 }
 
-// <div class="container-question">
-//     <div class="header-question">
-//         <p>Em qual animal Olho-Tonto Moody transfigurou Malfoy</p>
-//     </div>
-//     <div class="options">
-//         <figure class="image-op" onclick="selecionarResposta(this)">
-//             <img src="images/gatinho.png" alt="Gatinho amarelo"/>
-//                 <figcaption>Gatíneo</figcaption>
-//         </figure>
-//         <figure class="image-op" onclick="selecionarResposta(this)">
-//             <img src="images/Ratata.png" alt="Ratinho cinza"/>
-//                 <figcaption>Ratata</figcaption>
-//         </figure>
-//         <figure class="image-op" onclick="selecionarResposta(this)">
-//             <img src="images/sapo-gordo.png" alt="Sapo grande"/>
-//                 <figcaption>Sapo gordo</figcaption>
-//         </figure>
-//         <figure class="image-op" onclick="selecionarResposta(this)">
-//             <img src="images/furao.png" alt="Furão"/>
-//                 <figcaption>Mustela putorius (o Furão)</figcaption>
-//         </figure>
-//     </div>
-// </div>
+function renderOptionsQuizz(item,index) {
+    let options = [... document.querySelectorAll(`.options`)]
+    for (let index = 0; index < item.data.questions.answers; index++) {    
+    }
+}
