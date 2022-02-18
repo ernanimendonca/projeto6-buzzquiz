@@ -23,7 +23,6 @@ getAllQuizzes()
         url: URL,
     
     }).then(item=>{
-        console.log(item);
         renderAllQuizzes(item)
     }).catch(error => {
         console.log(error);
@@ -34,7 +33,6 @@ getAllQuizzes()
      let container = document.querySelector('.all')
      container.innerHTML=''
      for (let index = 0; index <response.data.length; index++) {
-       console.log(response.data[index]);
          container.innerHTML +=
          `
             <div class="quizz" id=${response.data[index].id} onclick="pageQuizz(${response.data[index].id})">
@@ -47,3 +45,4 @@ getAllQuizzes()
          `
      }
  }
+
