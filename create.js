@@ -246,6 +246,9 @@ function createNewLvls() {
     let subtitle = document.querySelector('h2')
     subtitle.innerHTML = 'Agora, decida os níveis!'
     let container = document.querySelector('.creatingQuizz')
+    let button = document.querySelector('.btn-basic-info')
+    button.innerHTML='Finalizar Quizz'
+    button.setAttribute('onclick','finishQuizz()')
     container.innerHTML = ''    
     for (let index = 0; index <infoQuizz.nLevels.value; index++) {
         cont =index
@@ -302,20 +305,19 @@ function showLevels(cont) {
         hiddenBar[cont].classList.add('hidden')
         hiddenOption[cont].classList.remove('hidden')
 }
+function finishQuizz() {
+    let subtitle = document.querySelector('h2')
+    subtitle.innerHTML = 'Seu quizz está pronto!'
+    let container = document.querySelector('.creatingQuizz')
+    
+    let button = document.querySelector('.btn-basic-info')
+    button.innerHTML='Acessar Quizz'
+    button.setAttribute('onclick','finishQuizz()')
+    container.innerHTML = `
+        <div class='finalscreen'>
+             <img class ='imgFinish' src=${infoQuizz.urlImage.value}></img>
+             <h4 class='subtitleImg'>${infoQuizz.title.value}</h4>
+        </div>
+    `    
 
-    // for (let index = 0; index < infosAnswer.length; index++) {
-    //     question[index]
-    //     // infosAnswer[index] = {
-    //     //     question : question,
-    //     //     colorBg: colorBackgroundQuestion,
-    //     //     correctlyAnswer: correctlyAnswer,
-    //     //     imageAnswerCorrectly: imageAnswerCorrectly,
-    //     //     textIncorrectAnswer1: textIncorrectAnswer1,
-    //     //     imageAnswerIncorrect1: imageAnswerIncorrect1,
-    //     //     textIncorrectAnswer2: textIncorrectAnswer2,
-    //     //     imageAnswerIncorrect2:imageAnswerIncorrect2,
-    //     //     textIncorrectAnswer3: textIncorrectAnswer3,
-    //     //     imageAnswerIncorrect3: imageAnswerIncorrect3,
-    //     // }
-        
-    // }
+}
