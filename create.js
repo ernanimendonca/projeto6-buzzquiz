@@ -1,5 +1,7 @@
 let infosAnswer =[]
-let id = 1
+let id = 0
+let infoQuizz=[]
+let cont =0
 
 function showBasicInfoScreen() {
     makeScreenActive(3);
@@ -38,7 +40,10 @@ function getBasicInfo() {
         nQuestions: document.querySelector('.n-questions'),
         nLevels: document.querySelector('.n-levels')
     }
+    createListOfQuestions(inputs.nQuestions.value)
     createNewBuzzQuiz(inputs)
+    infoQuizz = inputs
+    infosAnswer.length = inputs.nQuestions.value
     // if (isInputValid(inputs)) {
     //     createNewBuzzQuiz(inputs)
     // } else {
@@ -96,11 +101,28 @@ function showErrorMessage(inputObject) {
     invalidQuestion.querySelector('input').classList.add('invalid');
     invalidQuestion.querySelector('.invalid-input').classList.remove('hidden');
 }
-
+function createListOfQuestions(number) {
+    for (let index = 0; index < number; index++) {
+        
+        infosAnswer[index] = {
+            question : '',
+            colorBg: '',
+            correctlyAnswer:'' ,
+            imageAnswerCorrectly:'' ,
+            textIncorrectAnswer1: '',
+            imageAnswerIncorrect1: '',
+            textIncorrectAnswer2: '',
+            imageAnswerIncorrect2:'',
+            textIncorrectAnswer3: '',
+            imageAnswerIncorrect3: '',
+        }
+    }
+}
 function createNewBuzzQuiz(infos) {
     let subtitle = document.querySelector('h2')
     let containerQuestions = document.querySelector(".questions")
     let button = document.querySelector('.btn-basic-info')
+    button.style.margin = '46px 0 0 0 '
     let listAnswer =  containerQuestions.parentNode
     subtitle.innerHTML ='Crie suas perguntas'
     containerQuestions.innerHTML =''
@@ -108,46 +130,76 @@ function createNewBuzzQuiz(infos) {
     containerQuestions.classList.remove('questions')
     button.innerHTML = 'Prosseguir para criar niveis'
     button.setAttribute('onclick','createNewLvls()')
-    
-        containerQuestions.innerHTML =
-        `<div class='newQuestion ${id}'>
-            <p class ='subtitle-questions' id ='1'>Pergunta 1 </p>
-            <input type="text" class="textQuestion ${id}" placeholder="Texto da pergunta">
-            <input type='text' class='colorQuestion ${id}' placeholder ='Cor de fundo da pergunta'/>
-
-            <h2 class='right answer'>Resposta correta</h2>
-
-            <input type="text" class="correctlyAnswer ${id}" placeholder="Resposta correta">
-            <input type='text' class='imageAnswerCorrectly ${id}' placeholder ='Url da imagem'/>
-
-            <h2 class=' answer'>Respostas Incorretas </h2>
-            <div class='incorrectAnswer'>
-                <input type="text" class="textIncorrectAnswer1" placeholder="Resposta incorreta 1">
-                <input type='text' class='imageAnswerIncorrect1' placeholder ='Url da imagem'/>
-            </div>
-            <div class='incorrectAnswer'>
-                <input type="text" class="textIncorrectAnswer2" placeholder="Resposta incorreta 2">
-                <input type='text' class='imageAnswerIncorrect2' placeholder ='Url da imagem'/>
-            </div>
-            <div class='incorrectAnswer'>
-                <input type="text" class="textIncorrectAnswer3" placeholder="Resposta incorreta 3">
-                <input type='text' class='imageAnswerIncorrect3' placeholder ='Url da imagem'/>
-            </div>
-        </div>
-        <button onclick='save()'>save this</button>
-        `    
-        for (let index = 1; index < infos.nQuestions.value; index++) {
-            console.log(index+1);
-            listAnswer.innerHTML +=
-            `
-                <div class='creatingQuizz AswerList'>
+        for (let index = 0; index < infos.nQuestions.value; index++) {
+            id = index
+            if(index == 0){
+                containerQuestions.innerHTML +=
+                `
+                <div class='creatingQuizz AswerList ${index} hidden'>
                     <h3>Pergunta ${index + 1}</h3>
-                    <ion-icon  id="${index + 1}" onclick='editAnswer(this)' name="create-outline"></ion-icon>
+                    <ion-icon  id="${index}" onclick='editAnswer(this,id)' name="create-outline"></ion-icon>
                 </div>
-            `   
+                <div class='newQuestion ${index}'>
+                    <p class ='subtitle-questions' id=${index}>Pergunta ${index + 1} </p>
+                    <input type="text" class="textQuestion ${index}"  placeholder="Texto da pergunta">
+                    <input type='text' class='colorQuestion ${index}'  placeholder ='Cor de fundo da pergunta'/>
+        
+                    <h2 class='right answer'>Resposta correta</h2>
+        
+                    <input type="text" class="correctlyAnswer ${index}" placeholder="Resposta correta">
+                    <input type='text' class='imageAnswerCorrectly ${index}' placeholder ='Url da imagem'/>
+        
+                    <h2 class=' answer'>Respostas Incorretas </h2>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer1"placeholder="Resposta incorreta 1">
+                        <input type='text' class='imageAnswerIncorrect1'  placeholder ='Url da imagem'/>
+                    </div>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer2"  placeholder="Resposta incorreta 2">
+                        <input type='text' class='imageAnswerIncorrect2'  placeholder ='Url da imagem'/>
+                    </div>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer3"  placeholder="Resposta incorreta 3">
+                        <input type='text' class='imageAnswerIncorrect3'  placeholder ='Url da imagem'/>
+                    </div>
+                </div>
+                `    
+            }else{
+                containerQuestions.innerHTML +=
+                `
+                <div class='creatingQuizz ${index} AswerList noHidden'>
+                    <h3>Pergunta ${index + 1}</h3>
+                    <ion-icon  id="${index}" onclick='editAnswer(this,id)' name="create-outline"></ion-icon>
+                </div>
+                <div class='newQuestion ${index} hidden'>
+                    <p class ='subtitle-questions' id =${index}>Pergunta ${index + 1} </p>
+                    <input type="text" class="textQuestion ${index}"  placeholder="Texto da pergunta">
+                    <input type='text' class="colorQuestion ${index}"  placeholder ='Cor de fundo da pergunta'/>
+        
+                    <h2 class='right answer'>Resposta correta</h2>
+        
+                    <input type="text" class="correctlyAnswer ${index}"placeholder="Resposta correta">
+                    <input type='text' class='imageAnswerCorrectly ${index}'placeholder ='Url da imagem'/>
+        
+                    <h2 class=' answer'>Respostas Incorretas </h2>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer1 ${index}" placeholder="Resposta incorreta 1">
+                        <input type='text' class='imageAnswerIncorrect1 ${index}'  placeholder ='Url da imagem'/>
+                    </div>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer2 ${index}" placeholder="Resposta incorreta 2">
+                        <input type='text' class='imageAnswerIncorrect2'  placeholder ='Url da imagem'/>
+                    </div>
+                    <div class='incorrectAnswer'>
+                        <input type="text" class="textIncorrectAnswer3 ${index}"  placeholder="Resposta incorreta 3">
+                        <input type='text' class='imageAnswerIncorrect3 ${index}'  placeholder ='Url da imagem'/>
+                    </div>
+                </div>
+                `    
+            }
         }
 }
-function save(params) {
+function save(cont) {
     let question = document.querySelector(`.textQuestion`).value
     let colorBackgroundQuestion = document.querySelector('.colorQuestion').value
     let correctlyAnswer = document.querySelector('.correctlyAnswer').value
@@ -171,43 +223,99 @@ function save(params) {
         textIncorrectAnswer3: textIncorrectAnswer3,
         imageAnswerIncorrect3: imageAnswerIncorrect3,
     }
-    console.log(infosAnswer);
-
 }
-function editAnswer(answer) {
-    console.log(answer);
-    let containerQuestions = document.querySelector(".questions")
-    let checkHowAnswerIsOpen = document.querySelector('.newQuestion p')
-    console.log(checkHowAnswerIsOpen.id);
-    answer.parentNode.innerHTML =  
-      `
-    <div class='newQuestion'>
-        <p class ='subtitle-questions' id ='1'>Pergunta 1 </p>
-        <input type="text" class="title" placeholder="Texto da pergunta">
-        <input type='text' class='colorQuestion' placeholder ='Cor de fundo da pergunta'/>
-
-        <h2 class='right answer'>Resposta correta</h2>
-
-        <input type="text" class="title" placeholder="Resposta correta">
-        <input type='text' class='imageAnswer' placeholder ='Url da imagem'/>
-
-        <h2 class=' answer'>Respostas Incorretas </h2>
-        <div class='incorrectAnswer'>
-            <input type="text" class="title" placeholder="Resposta incorreta 1">
-            <input type='text' class='colorQuestion' placeholder ='Url da imagem'/>
-        </div>
-        <div class='incorrectAnswer'>
-            <input type="text" class="title" placeholder="Resposta incorreta 2">
-            <input type='text' class='colorQuestion' placeholder ='Url da imagem'/>
-        </div>
-        <div class='incorrectAnswer'>
-            <input type="text" class="title" placeholder="Resposta incorreta 3">
-            <input type='text' class='colorQuestion' placeholder ='Url da imagem'/>
-        </div>
-    </div>
-`    
+function editAnswer(answer,cont) {
+    
+    let hiddenBar = document.querySelectorAll('.AswerList')
+    let hiddenOption = document.querySelectorAll('.newQuestion')
+    for (let index = 0; index < hiddenBar.length; index++) {
+        if (hiddenBar[index].classList.contains('hidden')) {
+            hiddenBar[index].classList.remove('hidden')
+        }if(!hiddenOption[index].classList.contains("hidden")){
+            hiddenOption[index].classList.add('hidden')
+        }
+        
+    }
+    hiddenBar[cont].classList.add('hidden')
+    hiddenOption[cont].classList.remove('hidden')
+    save(cont)
+    id =cont
 }
 
 function createNewLvls() {
-    console.log('teste');
+    let subtitle = document.querySelector('h2')
+    subtitle.innerHTML = 'Agora, decida os níveis!'
+    let container = document.querySelector('.creatingQuizz')
+    container.innerHTML = ''    
+    for (let index = 0; index <infoQuizz.nLevels.value; index++) {
+        cont =index
+        console.log(cont);
+        if (index == 0 ) {
+            container.innerHTML =
+            `
+            <div class='creatingQuizz levelList ${cont} hidden'>
+                <h3>Nível ${index + 1}</h3>
+                <ion-icon  id="${index}" onclick='showLevels(${cont})' name="create-outline"></ion-icon>
+            </div>
+            <div class='newLevel ${cont}'>
+                <p class ='subtitle-questions' id=${index}>Nível ${index + 1} </p>
+                <input type="text" class="titleNivel ${index}"  placeholder="Titulo do nível">
+                <input type='text' class='percents ${index}'  placeholder ='% de acertos mínima'/>
+                <input type='text' class='urlNivel ${index}'  placeholder ='URL da imagem  do nível'/>
+                <textarea type="text" class="descriptionNivel ${index} placeholder="descrição do nível" > </textarea>
+            </div>
+            `
+        }else{
+            container.innerHTML +=
+            `
+            <div class='creatingQuizz levelList  ${cont}'>
+                <h3>Nível ${index + 1}</h3>
+                <ion-icon  id="${index}" onclick='showLevels(${cont})' name="create-outline"></ion-icon>
+            </div>
+            <div class='newLevel ${cont} hidden'>
+                <p class ='subtitle-questions' id=${index}>Nível ${index + 1} </p>
+                <input type="text" class="titleNivel ${index}"  placeholder="Titulo do nível">
+                <input type='text' class='percents ${index}'  placeholder ='% de acertos mínima'/>
+                <input type='text' class='urlNivel ${index}'  placeholder ='URL da imagem  do nível'/>
+                <textarea type="text" class="descriptionNivel ${index} placeholder="descrição do nível" > </textarea>
+            </div>
+            `
+        }
+        
+    }
 }
+
+function showLevels(cont) {
+        let hiddenBar = document.querySelectorAll('.levelList')
+        let hiddenOption = document.querySelectorAll('.newLevel')
+        for (let index = 0; index < hiddenBar.length; index++) {
+            if (hiddenBar[index].classList.contains('hidden')) {
+                hiddenBar[index].classList.remove('hidden')
+            }if(!hiddenOption[index].classList.contains("hidden")){
+                hiddenOption[index].classList.add('hidden')
+            }
+            
+        }
+        console.log(hiddenBar);
+        console.log(hiddenOption);
+        console.log(cont);
+        hiddenBar[cont].classList.add('hidden')
+        hiddenOption[cont].classList.remove('hidden')
+}
+
+    // for (let index = 0; index < infosAnswer.length; index++) {
+    //     question[index]
+    //     // infosAnswer[index] = {
+    //     //     question : question,
+    //     //     colorBg: colorBackgroundQuestion,
+    //     //     correctlyAnswer: correctlyAnswer,
+    //     //     imageAnswerCorrectly: imageAnswerCorrectly,
+    //     //     textIncorrectAnswer1: textIncorrectAnswer1,
+    //     //     imageAnswerIncorrect1: imageAnswerIncorrect1,
+    //     //     textIncorrectAnswer2: textIncorrectAnswer2,
+    //     //     imageAnswerIncorrect2:imageAnswerIncorrect2,
+    //     //     textIncorrectAnswer3: textIncorrectAnswer3,
+    //     //     imageAnswerIncorrect3: imageAnswerIncorrect3,
+    //     // }
+        
+    // }
