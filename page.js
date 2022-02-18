@@ -25,14 +25,11 @@ function getInfosIdQuizz(id) {
     }).catch(error => {
         console.log(error);
     })
-    console.log(id);
 }
 function renderInfosIdQuizz(item) {
-    console.log(item);
     let container = document.querySelector('.exhibition-quizz')
     let banner = container.querySelector('.banner')
-    let containerQuestion = document.querySelector('container-question')
-
+    let arrayAnswer = []
     banner.innerHTML =
         `
         <p>${item.data.title}</p>
@@ -42,17 +39,7 @@ function renderInfosIdQuizz(item) {
         </div>
     `
     for (let index = 0; index < item.data.questions.length; index++) {
-        // for (let j = 0; j < item.data.questions[index].answers.length; j++) {
-        //     //    let options = document.querySelector('.options')
-        //         `
-        //         <figure class="image-op" onclick="selecionarResposta(this)">
-        //         <img src="${item.data.questions[index].answers[j].image}" alt=""/>
-        //             <figcaption>${item.data.questions[index].answers[j].text}</figcaption>
-        //         </figure>
-        //    `
-        //    options.push(teste)
-        //     console.log(options);
-        // }
+        arrayAnswer.push(item.data.questions[index].answers.length);
         container.innerHTML +=
             `
         <div class="container-question">
@@ -61,15 +48,25 @@ function renderInfosIdQuizz(item) {
             </div>
             <div class="options ${index}">
             </div>
-        </div>-
+        </div>
         `
     }
-    renderOptionsQuizz(item,index)
-    console.log(item);
+    renderOptionsQuizz(item,arrayAnswer)
+
 }
 
-function renderOptionsQuizz(item,index) {
+function renderOptionsQuizz(item,tamanhoDasRespostas) {
     let options = [... document.querySelectorAll(`.options`)]
-    for (let index = 0; index < item.data.questions.answers; index++) {    
+    console.log(tamanhoDasRespostas);
+    for (let i = 0; i < tamanhoDasRespostas.length; i++) {
+        for (let index = 0; index < tamanhoDasRespostas[index]; index++) {   
+            options[i].innerHTML += 
+            `
+            <figure class="image-op" onclick="selecionarResposta(this)">
+                <img  src="${item.data.questions[i].answers[index].image}" alt="">
+                <figcaption>${item.data.questions[i].answers[index].text}</figcaption>
+            </figure>
+            `
+        }
     }
 }
