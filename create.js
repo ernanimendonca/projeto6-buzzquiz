@@ -378,9 +378,13 @@ function finishQuizz() {
     let subtitle = document.querySelector('h2')
     subtitle.innerHTML = 'Seu quizz está pronto!'
     let container = document.querySelector('.creatingQuizz')
+    let box = document.querySelector('.basic-info')
 
     let button = document.querySelector('.btn-basic-info')
     button.innerHTML = 'Acessar Quizz'
+    
+
+    
     button.setAttribute('onclick', 'finishQuizz()')
     container.innerHTML = `
         <div class='finalscreen'>

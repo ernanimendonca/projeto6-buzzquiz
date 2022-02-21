@@ -430,3 +430,8 @@ figcaption{
         overflow: hidden;
     
     }
+    .quizz-container.all, .quizz-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }

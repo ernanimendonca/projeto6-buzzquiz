@@ -101,7 +101,7 @@
     width: 340px;
     overflow: hidden;
     text-align: justify;
-    margin-left: 21px;
+    margin-left: 0px;
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
@@ -111,4 +111,7 @@
 
 
 color: #484848;
+}
+.image-banner{
+    margin-top: 80px ;
 }
