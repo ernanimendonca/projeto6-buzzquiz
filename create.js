@@ -5,7 +5,9 @@ let cont = 0
 let answerCreateQuiz = []
 let respostas = []
 let pergunta = []
-let levels =[]
+let levels = []
+let infosPage = []
+let perguntas =[]
 function showBasicInfoScreen() {
     makeScreenActive(3);
     const createQuizz = document.querySelector('.create-quizz');
@@ -43,15 +45,13 @@ function getBasicInfo() {
         nQuestions: document.querySelector('.n-questions'),
         nLevels: document.querySelector('.n-levels')
     }
-    createListOfQuestions(inputs.nQuestions.value)
-    createNewBuzzQuiz(inputs)
     infoQuizz = inputs
     infosAnswer.length = inputs.nQuestions.value
-    // if (isInputValid(inputs)) {
-    //     createNewBuzzQuiz(inputs)
-    // } else {
-    //     console.log('deu ruim');
-    // }
+    if (isInputValid(inputs)) {
+        createNewBuzzQuiz(inputs)
+    } else {
+        console.log('deu ruim');
+    }
 }
 
 function isInputValid(inputs) {
@@ -104,14 +104,6 @@ function showErrorMessage(inputObject) {
     invalidQuestion.querySelector('input').classList.add('invalid');
     invalidQuestion.querySelector('.invalid-input').classList.remove('hidden');
 }
-function createListOfQuestions(number) {
-    for (let index = 0; index < number; index++) {
-
-        infosAnswer[index] = {
-
-        }
-    }
-}
 function createNewBuzzQuiz(infos) {
     let subtitle = document.querySelector('h2')
     let containerQuestions = document.querySelector(".questions")
@@ -133,7 +125,7 @@ function createNewBuzzQuiz(infos) {
                     <h3>Pergunta ${index + 1}</h3>
                     <ion-icon  id="${index}" onclick='editAnswer(this,id)' name="create-outline"></ion-icon>
                 </div>
-                <div class='newQuestion ${index}'>
+                <div class='newQuestion ${index}' data-index ='${index}'>
                     <p class ='subtitle-questions' id=${index}>Pergunta ${index + 1} </p>
                     <input type="text" class="textQuestion ${index}" value =''  placeholder="Texto da pergunta">
                     <input type='text' class='colorQuestion ${index}' value =''  placeholder ='Cor de fundo da pergunta'/>
@@ -165,28 +157,28 @@ function createNewBuzzQuiz(infos) {
                     <h3>Pergunta ${index + 1}</h3>
                     <ion-icon  id="${index}" onclick='editAnswer(this,id)' name="create-outline"></ion-icon>
                 </div>
-                <div class='newQuestion ${index} hidden'>
-                    <p class ='subtitle-questions' id =${index}>Pergunta ${index + 1} </p>
-                    <input type="text" class="textQuestion ${index}"  placeholder="Texto da pergunta">
-                    <input type='text' class="colorQuestion ${index}"  placeholder ='Cor de fundo da pergunta'/>
+                <div class='newQuestion ${index} hidden' data-index ='${index}'>
+                    <p class ='subtitle-questions' id=${index}>Pergunta ${index + 1} </p>
+                    <input type="text" class="textQuestion ${index}" value =''  placeholder="Texto da pergunta">
+                    <input type='text' class='colorQuestion ${index}' value =''  placeholder ='Cor de fundo da pergunta'/>
         
                     <h2 class='right answer'>Resposta correta</h2>
         
-                    <input type="text" class="correctlyAnswer q ${index}"placeholder="Resposta correta">
-                    <input type='text' class='imageAnswer i Correctly ${index}'placeholder ='Url da imagem'/>
+                    <input type="text" class="correctlyAnswer q ${index}" placeholder="Resposta correta">
+                    <input type='text' class='imageAnswerCorrectly i ${index}' placeholder ='Url da imagem'/>
         
                     <h2 class=' answer'>Respostas Incorretas </h2>
                     <div class='incorrectAnswer'>
-                        <input type="text" class="textIncorrectAnswer q 1 ${index}" placeholder="Resposta incorreta 1">
-                        <input type='text' class='imageAnswer i Incorrect1 ${index}'  placeholder ='Url da imagem'/>
+                        <input type="text" class="textIncorrectAnswer1 q ${index}"placeholder="Resposta incorreta 1">
+                        <input type='text' class='imageAnswerIncorrect1 i ${index}'  placeholder ='Url da imagem'/>
                     </div>
                     <div class='incorrectAnswer'>
-                        <input type="text" class="textIncorrectAnswer q 2 ${index}" placeholder="Resposta incorreta 2">
-                        <input type='text' class='imageAnswer i Incorrect2'  placeholder ='Url da imagem'/>
+                        <input type="text" class="textIncorrectAnswer2 q ${index}"  placeholder="Resposta incorreta 2">
+                        <input type='text' class='imageAnswerIncorrect2 i ${index}'  placeholder ='Url da imagem'/>
                     </div>
                     <div class='incorrectAnswer'>
-                        <input type="text" class="textIncorrectAnswer q 3 ${index}"  placeholder="Resposta incorreta 3">
-                        <input type='text' class='imageAnswer i Incorrect3 ${index}'  placeholder ='Url da imagem'/>
+                        <input type="text" class="textIncorrectAnswer3 q ${index}"  placeholder="Resposta incorreta 3">
+                        <input type='text' class='imageAnswerIncorrect3 i ${index}'  placeholder ='Url da imagem'/>
                     </div>
                 </div>
                 `
@@ -195,71 +187,130 @@ function createNewBuzzQuiz(infos) {
 }
 function saveQuestions() {
 
-     pergunta = []
+    pergunta = []
     let opcao = []
+    let cont = 0
     let question = [...document.querySelectorAll(`.newQuestion`)]
     let titleQuestion = [...document.querySelectorAll(`.textQuestion`)]
     let colorTittle = [...document.querySelectorAll(`.colorQuestion`)]
 
-    let todasopcoes = [...document.querySelectorAll(`.q `)]
     let todasimagens = [...document.querySelectorAll(`.i `)]
+    let todasopcoes = [...document.querySelectorAll(`.q`)]
 
     //for que pega todas as perguntas
-    for (let index = 0; index < question.length ; index++) {
-
+    console.log(todasopcoes);
+    // console.log(opcao);
+    for (let index = 0; index < question.length; index++) {
+        
         for (let j = 0; j < 4; j++) {
-            if (todasopcoes[index].classList.contains('correctlyAnswer')) {
-                console.log('dentro');
-                opcao[j] = {
-                    text: todasopcoes[j].value,
-                    image: todasimagens[j].value,
-                    isCorrectAnswer:true,
-                }
-                console.log(opcao[j]);
-                console.log(j);
-                console.log(opcao);
+            if (todasopcoes[j].classList.contains('correctlyAnswer')) {
                 
-            } else {
-                console.log('fora');
                 opcao[j] = {
                     text: todasopcoes[j].value,
                     image: todasimagens[j].value,
-                    isCorrectAnswer:false,
+                    isCorrectAnswer: true,
+                }
+
+            } else {
+                opcao[j] = {
+                    text: todasopcoes[j].value,
+                    image: todasimagens[j].value,
+                    isCorrectAnswer: false,
                 }
             }
-        pergunta[index] = {
-            title: titleQuestion[index].value,
-            colorTittle: colorTittle[index].value,
-            answer: [opcao],
+            pergunta[index] = {
+                title: titleQuestion[index].value,
+                color: colorTittle[index].value,
+                answers: [opcao],
+            }
         }
     }
-    } 
     respostas = [{
         title: infoQuizz.title.value,
         image: infoQuizz.urlImage.value,
         questions: pergunta,
-        levels:[]
+        levels: []
     }]
-}   
+}
 function editAnswer(answer, cont) {
-
-    let hiddenBar = document.querySelectorAll('.AswerList')
-    let hiddenOption = document.querySelectorAll('.newQuestion')
-    for (let index = 0; index < hiddenBar.length; index++) {
-        if (hiddenBar[index].classList.contains('hidden')) {
-            hiddenBar[index].classList.remove('hidden')
-        } if (!hiddenOption[index].classList.contains("hidden")) {
-            hiddenOption[index].classList.add('hidden')
+    let containerInfos = [...document.querySelectorAll('.newQuestion')]
+    infosPage = []
+    for (let index = 0; index < containerInfos.length; index++) {
+        if (!containerInfos[index].classList.contains('hidden')) {
+            infosPage = containerInfos[index]
         }
-
     }
-    hiddenBar[cont].classList.add('hidden')
-    hiddenOption[cont].classList.remove('hidden')
 
-    id = cont
+    let titlevalid = infosPage.querySelector('.textQuestion')
+    titlevalid = titlevalid.value
+    let hexadec = infosPage.querySelector('.colorQuestion')
+    hexadec = hexadec.value
+    
+    let correctlyAnswer = infosPage.querySelector('.correctlyAnswer')
+    correctlyAnswer = correctlyAnswer.value
+    let imageAnswerCorrectly = infosPage.querySelector('.imageAnswerCorrectly')
+    imageAnswerCorrectly = imageAnswerCorrectly.value
+
+    let textIncorrectAnswer1 = infosPage.querySelector('.textIncorrectAnswer1')
+    textIncorrectAnswer1 = textIncorrectAnswer1.value
+    let imageAnswerIncorrect1 = infosPage.querySelector('.imageAnswerIncorrect1')
+    imageAnswerIncorrect1 = imageAnswerIncorrect1.value
+
+    let textIncorrectAnswer2 = infosPage.querySelector('.textIncorrectAnswer2')
+    textIncorrectAnswer2 = textIncorrectAnswer2.value
+    let imageAnswerIncorrect2 = infosPage.querySelector('.imageAnswerIncorrect2')
+    imageAnswerIncorrect2 = imageAnswerIncorrect2.value
+
+    let textIncorrectAnswer3 = infosPage.querySelector('.textIncorrectAnswer3')
+    textIncorrectAnswer3 = textIncorrectAnswer3.value
+    let imageAnswerIncorrect3 = infosPage.querySelector('.imageAnswerIncorrect3')
+    imageAnswerIncorrect3 = imageAnswerIncorrect3.value
+
+
+    let istitlevalid = isTitleValid(titlevalid)
+    let isHexadecValid = ''
+
+    let iscorrectlyAnswerValid = isTitleValid(correctlyAnswer)
+    let istextIncorrectAnswer1 = isTitleValid(textIncorrectAnswer1)
+    let istextIncorrectAnswer2 = isTitleValid(textIncorrectAnswer2)
+    let istextIncorrectAnswer3 = isTitleValid(textIncorrectAnswer3)
+
+    let isImageAnswerCorrectlyValid = isURLValid(imageAnswerCorrectly)
+    let isimageAnswerIncorrect1Valid = isURLValid(imageAnswerIncorrect1)
+    let isimageAnswerIncorrect2Valid = isURLValid(imageAnswerIncorrect2)
+    let isimageAnswerIncorrect3Valid = isURLValid(imageAnswerIncorrect3)
+
+   
+    if (istitlevalid == true && iscorrectlyAnswerValid == true && istextIncorrectAnswer1 == true && istextIncorrectAnswer2 == true && istextIncorrectAnswer3 == true && isImageAnswerCorrectlyValid == true && isimageAnswerIncorrect1Valid == true && isimageAnswerIncorrect2Valid == true && isimageAnswerIncorrect3Valid == true) {
+        let hiddenBar = document.querySelectorAll('.AswerList')
+        let hiddenOption = document.querySelectorAll('.newQuestion')
+        for (let index = 0; index < hiddenBar.length; index++) {
+            if (hiddenBar[index].classList.contains('hidden')) {
+                hiddenBar[index].classList.remove('hidden')
+            } if (!hiddenOption[index].classList.contains("hidden")) {
+                hiddenOption[index].classList.add('hidden')
+            }
+
+        }
+        hiddenBar[cont].classList.add('hidden')
+        hiddenOption[cont].classList.remove('hidden')
+
+        id = cont
+
+    } else {
+        console.log('algo deu errado');
+    }
+    perguntas =[]
+    for (let index = 0; index < containerInfos.length; index++) {
+        if (index == infosPage.dataset.index){
+            perguntas[index] = infosPage
+        }
+    }
+
 }
 
 function createNewLvls() {
+    
     saveQuestions()
     let subtitle = document.querySelector('h2')
     subtitle.innerHTML = 'Agora, decida os níveis!'
@@ -338,36 +389,37 @@ function finishQuizz() {
         </div>
     `
     let url = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
-    console.log(respostas);
+
     axios({
-        method:'post',
-        url : url,
-        data :respostas,
-    }).then(item=>{
+        method: 'post',
+        url: url,
+        data: respostas,
+    }).then(item => {
         console.log(item);
-    }).catch(error =>{
+    }).catch(error => {
         console.log(error);
+        console.log(respostas);
     })
 
 }
 function saveLvls() {
- let container = [...document.querySelectorAll('.newLevel')]   
- let titlelvl = [...document.querySelectorAll('.titlelvl')]
- let percentslvl = [...document.querySelectorAll('.percentslvl')]
- let urlNivellvl = [...document.querySelectorAll('.urlNivellvl')]
- let descriptionlvl = [...document.querySelectorAll('.descriptionlvl')]
-  levels = []
-    for (let index = 0; index < container.length ; index++) {
-    
+    let container = [...document.querySelectorAll('.newLevel')]
+    let titlelvl = [...document.querySelectorAll('.titlelvl')]
+    let percentslvl = [...document.querySelectorAll('.percentslvl')]
+    let urlNivellvl = [...document.querySelectorAll('.urlNivellvl')]
+    let descriptionlvl = [...document.querySelectorAll('.descriptionlvl')]
+    levels = []
+    for (let index = 0; index < container.length; index++) {
+
         for (let j = 0; j < 2; j++) {
-           levels[index] ={
-               title : titlelvl[j].value,
-               image : urlNivellvl[j].value,
-               text : descriptionlvl[j].value,
-               minValue :percentslvl[j].value
-           }
-          
-          }
-      }
-      respostas[0].levels = levels
-  }
+            levels[index] = {
+                title: titlelvl[j].value,
+                image: urlNivellvl[j].value,
+                text: descriptionlvl[j].value,
+                minValue: percentslvl[j].value
+            }
+
+        }
+    }
+    respostas[0].levels = levels
+}
