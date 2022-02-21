@@ -72,3 +72,43 @@
     cursor: pointer;
     background-color: rgba(236, 54, 45, 75%);
 }
+
+.buttonquizz{
+    width: 324px;
+    height: 54px;
+    font-size:18px;
+    font-family: inherit;
+    border-radius: 15px;
+    border: none;
+}
+.buttonquizz:hover{
+    cursor: pointer;
+}
+.final{
+    display: flex;
+    flex-direction: column;
+    width: 759px;
+    height: 430px;
+}
+.final img{
+    width: 340px;
+    height: 255px;
+    
+    
+}
+.final p {
+    margin: 0 auto;
+    width: 340px;
+    overflow: hidden;
+    text-align: justify;
+    margin-left: 21px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 25px;
+    /* or 132% */
+
+
+color: #484848;
+}

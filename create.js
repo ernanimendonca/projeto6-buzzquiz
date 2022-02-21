@@ -209,13 +209,18 @@ function saveQuestions() {
 
         for (let j = 0; j < 4; j++) {
             if (todasopcoes[index].classList.contains('correctlyAnswer')) {
+                console.log('dentro');
                 opcao[j] = {
                     text: todasopcoes[j].value,
                     image: todasimagens[j].value,
                     isCorrectAnswer:true,
                 }
+                console.log(opcao[j]);
+                console.log(j);
+                console.log(opcao);
                 
             } else {
+                console.log('fora');
                 opcao[j] = {
                     text: todasopcoes[j].value,
                     image: todasimagens[j].value,
@@ -332,6 +337,17 @@ function finishQuizz() {
              <h4 class='subtitleImg'>${infoQuizz.title.value}</h4>
         </div>
     `
+    let url = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
+    console.log(respostas);
+    axios({
+        method:'post',
+        url : url,
+        data :respostas,
+    }).then(item=>{
+        console.log(item);
+    }).catch(error =>{
+        console.log(error);
+    })
 
 }
 function saveLvls() {
@@ -341,11 +357,6 @@ function saveLvls() {
  let urlNivellvl = [...document.querySelectorAll('.urlNivellvl')]
  let descriptionlvl = [...document.querySelectorAll('.descriptionlvl')]
   levels = []
-//  console.log(container);
-//  console.log(titlelvl);
-//  console.log(percentslvl);
-//  console.log(urlNivellvl);
-//  console.log(descriptionlvl);
     for (let index = 0; index < container.length ; index++) {
     
         for (let j = 0; j < 2; j++) {
@@ -359,5 +370,4 @@ function saveLvls() {
           }
       }
       respostas[0].levels = levels
-      console.log(respostas);
   }
